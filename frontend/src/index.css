@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@utility slides-utility {
+    scroll-snap-align: start;
+}
+
+article {
+    @apply slides-utility;
+}

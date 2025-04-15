@@ -1,0 +1,15 @@
+# Core Requirements
+Flask==2.3.2
+Flask-Cors==3.0.10
+
+# Data Processing
+pandas==2.0.3
+numpy==1.24.3
+scikit-learn==1.3.0
+
+# Text Processing
+scipy==1.10.1  # Required for scikit-learn's cosine similarity
+
+# Development (Optional)
+python-dotenv==1.0.0  # For environment variables
+jupyter==1.0.0  # Only if you need to run notebooks on server

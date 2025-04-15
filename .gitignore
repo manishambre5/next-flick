@@ -1,2 +1,5 @@
 .env
 *.csv
+backend/data/*.pkl
+__pycache__/
+notebooks/.ipynb_checkpoints/
