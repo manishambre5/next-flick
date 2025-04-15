@@ -63,10 +63,14 @@ function App() {
   return (
     <>
     <header>
-      <h1 className='text-5xl md:text-7xl text-center font-mono p-4'>next flick.</h1>
+      <h1 className='text-5xl md:text-7xl text-center font-mono p-4'>next flick</h1>
     </header>
     <main className='flex flex-col gap-4 justify-center items-center p-4 w-full'>
-      <section className='flex md:w-1/2'>
+      <form className='flex md:w-1/2 relative'
+        onSubmit={(e) => {
+          e.preventDefault();  // Prevent default form submission
+          handleSearch();
+        }}>
         <input 
           type="text" 
           value={query} 
@@ -74,37 +78,33 @@ function App() {
           placeholder="Enter a film that you love!"
           className='border-1 p-2 box-border border-r-0 outline-0 w-full'
         />
-        <button onClick={handleSearch} className='p-2 bg-black hover:bg-white hover:text-black box-border border-1 border-black text-white text-sm transition-all shrink-0'>
-          {loading ? 'Loading...' : 'Get a recommendation'}
-        </button>
-      </section>
+        <button type='submit' className='p-2 bg-black hover:bg-white hover:text-black box-border border-1 border-black text-white text-sm transition-all shrink-0'>Get a recommendation</button>
 
-      {error && <p className="text-red-700 mt-4 text-2xl">{error}</p>}
-
-      {suggestions.length > 0 && (
-        <ul className="mt-2 p-2 bg-gray-100 w-full max-h-60 overflow-y-auto">
+        {suggestions.length > 0 && (
+        <ul className="bg-white text-black max-h-60 overflow-y-auto absolute top-12 w-full">
           {suggestions.map((suggestion, index) => (
             <li 
               key={index} 
-              className="p-2 hover:bg-gray-300 cursor-pointer"
-              onClick={() => setQuery(suggestion)}
+              className="p-2 hover:bg-gray-900 hover:text-white transition-all cursor-pointer"
+              onClick={() => {setQuery(suggestion); setSuggestions([])}}
             >
               {suggestion}
-            </li>
-          ))}
-        </ul>
-      )}
+            </li>))}
+          </ul>)}
+      </form>
 
-      <section className='w-sm md:w-2xl overflow-hidden'>
+      {error && <p className="text-red-700 mt-4 text-2xl">{error}</p>}
+
+      <section className='w-sm md:w-3xl overflow-hidden'>
         <section className='flex overflow-x-auto snap-mandatory snap-x scroll-smooth scrolling-touch'>
           {results.map((movie) => (
-            <article key={movie.title} className='w-full flex flex-col md:flex-row gap-2 md:gap-4 shrink-0 items-center justify-center md:items-start md:justify-evenly p-4 bg-gray-900 m-2 text-white'>
-              <aside className='h-2/3 md:shrink-0'>
+            <article key={movie.title} className='w-full flex flex-col md:flex-row gap-2 md:gap-4 shrink-0 items-center justify-baseline md:items-start md:justify-evenly p-4 m-2 text-black'>
+              <aside className='md:h-2/3 md:shrink-0'>
                 {movie.poster_path && (
-                  <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} className='' />
+                  <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} className='w-full' />
                 )}
               </aside>
-              <section className='flex flex-col justify-baseline items-start'>
+              <section className='flex flex-col justify-baseline items-start border-t-1 md:border-t-0 md:border-l-1 pl-2'>
                 <h1 className='text-3xl md:text-5xl'>{movie.title}</h1>
                 <p className='md:text-lg italic'>{movie.overview}</p>
               </section>
@@ -115,7 +115,7 @@ function App() {
         </section>
         {results.length > 0 && <p className='text-lg text-gray-500 hover:text-gray-700 cursor-default text-center'>Not interested / Already Watched? Swipe for more recommendations!</p>}
 
-        {suggestions.length === 0 && !loading && query && (
+        {suggestions.length === 0 && results.length === 0 && !loading && query && (
           <p className="text-xl text-gray-700 text-center">
             No results found for "{query}". Try another movie.</p>)}
     </main>
