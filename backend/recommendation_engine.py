@@ -18,7 +18,7 @@ class MovieRecommender:
             sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
             sim_scores = sim_scores[1:num_recommendations+1]  # Skip the movie itself
             movie_indices = [i[0] for i in sim_scores]
-            return self.metadata.iloc[movie_indices][['title', 'imdb_rating', 'poster_path', 'overview']]
+            return self.metadata.iloc[movie_indices][['title', 'imdb_id', 'tmdb_id', 'poster_path', 'overview', 'original_language']]
         except:
             return None  # Movie not found
     

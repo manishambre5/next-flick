@@ -1,9 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Limelight&family=Quicksand:wght@300..700&display=swap');
 @import "tailwindcss";
 
-@utility slides-utility {
-    scroll-snap-align: start;
-}
-
-article {
-    @apply slides-utility;
+@theme {
+    --font-header: "Limelight", "sans-serif";
+    --font-display: "Quicksand", "sans-serif";
 }
